@@ -480,7 +480,7 @@ with c2:
     md("""
     <div class="grid" style="grid-template-columns:1fr 1fr">
     <div class="stat"><div class="ring"><b>9.4</b></div><span>CGPA out of 10</span></div>
-    <div class="stat"><b>Top 2</b><span>Project among many students</span></div>
+    <div class="stat"><b>Best Project </b><span>Agentic AI</span></div>
     <div class="stat"><b>2027</b><span>Expected Graduation</span></div>
     <div class="stat"><b>100–1000+</b><span>Audience sizes hosted</span></div>
     </div>
@@ -622,7 +622,7 @@ md("""
 section("achievements", "Achievements", "Highlights so far")
 md("""
 <div class="grid g3 badge">
-<div class="card"><div class="ico">🏆</div><h3>Top 2 Project</h3><p>Among many students, Generative AI &amp; Agentic AI training</p></div>
+<div class="card"><div class="ico">🏆</div><h3>Best Project</h3><p> Generative AI &amp; Agentic AI training</p></div>
 <div class="card"><div class="ico">🎤</div><h3>Microsoft Event Host</h3><p>INCEPTA HER 1.0, Sept 2026</p></div>
 <div class="card"><div class="ico">🔬</div><h3>IEEE Member</h3><p>Research &amp; technical activities</p></div>
 <div class="card"><div class="ico">🎓</div><h3>Placement Cell Coordinator</h3><p>Student–recruiter coordination at IITM</p></div>
