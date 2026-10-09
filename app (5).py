@@ -397,16 +397,41 @@ def show_canvas(html, height):
 
 md(CSS)
 
-# ---------------- NAV ----------------
+# =====================================================================
+#  DATA
+# =====================================================================
+def resume_button(fname, label, key):
+    path = os.path.join(HERE, fname)
+    if os.path.exists(path):
+        with open(path, "rb") as f:
+            st.download_button(label, f.read(), file_name=fname, mime="application/pdf",
+                               key=key, use_container_width=True)
+    else:
+        st.caption(f"Add `{fname}` next to app.py to enable this download.")
+
+
+def proj_card(no, icon, title, sub, question, flow, body, stack):
+    flow_html = "<i>→</i>".join(f"<span>{s}</span>" for s in flow)
+    return (f'<div class="card proj"><div class="no">{no}</div><div class="ico">{icon}</div>'
+            f'<h3>{title}</h3><div class="eyebrow" style="letter-spacing:.1em">{sub}</div>'
+            f'<div class="q"><b>Question:</b> {question}</div>'
+            f'<div class="flow">{flow_html}</div><p>{body}</p>{chips(stack, "l")}</div>')
+
+
+# =====================================================================
+#  NAV
+# =====================================================================
 md("""
 <div class="nav">
-<a href="#home">Home</a><a href="#about">About</a><a href="#work">Work</a><a href="#data">Data</a>
-<a href="#ai">AI &amp; Research</a><a href="#experience">Experience</a><a href="#stage">On Stage</a>
-<a href="#achievements">Achievements</a><a href="#skills">Skills</a><a href="#resume">Resumes</a><a href="#contact">Contact</a>
+<a href="#home">Home</a><a href="#about">About</a><a href="#projects">Projects</a>
+<a href="#experience">Experience</a><a href="#achievements">Achievements</a>
+<a href="#skills">Skills</a><a href="#contact">Contact</a>
 </div>
 """)
 
-# ---------------- HERO ----------------
+# =====================================================================
+#  1. HOME
+# =====================================================================
 li_btn = f'<a class="btn s" href="{LINKEDIN_URL}" target="_blank">LinkedIn</a>' if LINKEDIN_URL else ""
 md(f"""
 <div class="hero" id="home">
@@ -415,46 +440,29 @@ md(f"""
 <h1><span class="a">Hritvi</span><br><span class="b">Maheshwari</span></h1>
 <div class="roles">Data &nbsp;|&nbsp; AI &nbsp;|&nbsp; Research &nbsp;|&nbsp; Communication</div>
 <div class="rotline">I love working with <span class="rot"><span class="rot-in"><b>data</b><b>AI</b><b>research</b><b>audiences</b><b>data</b></span></span></div>
-<p>I explore the intersection of technology, data and communication, building practical projects,
-contributing to research, and creating engaging experiences on and off the stage.</p>
+<p>A BCA student who combines analytical thinking, emerging technology, research and strong communication
+to turn ideas into meaningful outcomes.</p>
 <div class="btns">
-<a class="btn p" href="#work">View My Work →</a>
-<a class="btn s" href="#resume">Resumes</a>
+<a class="btn p" href="#projects">View My Projects →</a>
+<a class="btn s" href="#contact">Resumes &amp; Contact</a>
 {li_btn}
 </div>
 <div class="meta">📍 Delhi, India &nbsp;·&nbsp; BCA, IITM Janakpuri &nbsp;·&nbsp; Expected Graduation 2027</div>
 </div>
-<div class="avatar-wrap"><div class="orbit o2"></div><div class="orbit o1"></div><div class="avatar">{photo_html()}</div><div class="fchip f1">📊 Data</div><div class="fchip f2">🤖 AI</div><div class="fchip f3">🎤 Host</div><div class="spark sp1">✦</div><div class="spark sp2">✦</div></div>
+<div class="avatar-wrap"><div class="orbit o2"></div><div class="orbit o1"></div><div class="avatar">{photo_html()}</div>
+<div class="fchip f1">📊 Data</div><div class="fchip f2">🤖 AI</div><div class="fchip f3">🎤 Host</div>
+<div class="spark sp1">✦</div><div class="spark sp2">✦</div></div>
 </div>
 """)
 
-# ---------------- MARQUEE ----------------
 _items = ["Python", "SQL", "Power BI", "Excel", "Statistics", "Generative AI", "Agentic AI", "NLP", "LangChain",
           "Streamlit", "Research", "Public Speaking", "Anchoring", "Leadership"]
 _row = "".join(f'<span>{t}</span><span class="w">✦</span>' for t in _items)
 md(f'<div class="marq"><div class="marq-in">{_row}{_row}</div></div>')
 
-# ---------------- CHOOSE YOUR PATH ----------------
-section("path", "Start here", "What are you here to explore?",
-        "One portfolio, three directions. Pick the one that matters to you.")
-md(f"""
-<div class="grid g3">
-<div class="card path"><div class="ico">📊</div><h3>Data &amp; Analytics</h3>
-<p>I turn raw information into meaningful insights.</p>
-{chips(["Python", "SQL", "Power BI", "Excel", "Statistics"])}<br>
-<a class="go" href="#data">Explore Analytics →</a></div>
-<div class="card path"><div class="ico">🤖</div><h3>AI &amp; Research</h3>
-<p>I explore AI through practical projects and research.</p>
-{chips(["Generative AI", "Agentic AI", "NLP", "LangChain", "IEEE"])}<br>
-<a class="go" href="#ai">Explore AI &amp; Research →</a></div>
-<div class="card path"><div class="ico">🎤</div><h3>Hosting &amp; Leadership</h3>
-<p>I turn events into engaging experiences.</p>
-{chips(["Anchoring", "Public Speaking", "Stage Flow", "Coordination"])}<br>
-<a class="go" href="#stage">Explore Communication →</a></div>
-</div>
-""")
-
-# ---------------- ABOUT ----------------
+# =====================================================================
+#  2. ABOUT
+# =====================================================================
 section("about", "About me", "Technology, with a human voice")
 c1, c2 = st.columns([1.4, 1], gap="large")
 with c1:
@@ -466,139 +474,130 @@ with c1:
     while my experience in event hosting and student coordination has strengthened my communication,
     leadership and problem-solving abilities.</p>
     <p style="font-size:1rem">I enjoy learning emerging technologies, simplifying complex ideas, and working on
-    projects where technology creates practical value. Right now I'm building my skills across Python, SQL,
-    Power BI, Generative AI, Agentic AI and data-driven problem solving.</p></div>
+    projects where technology creates practical value.</p></div>
     """)
 with c2:
     md("""
     <div class="grid" style="grid-template-columns:1fr 1fr">
     <div class="stat"><div class="ring"><b>9.4</b></div><span>CGPA out of 10</span></div>
+    <div class="stat"><b>Top 2</b><span>Project among many students</span></div>
     <div class="stat"><b>2027</b><span>Expected Graduation</span></div>
-    <div class="stat"><b>2nd / 65</b><span>Best Project, GenAI &amp; Agentic AI</span></div>
     <div class="stat"><b>100–1000+</b><span>Audience sizes hosted</span></div>
     </div>
     """)
-
-# ---------------- WHAT I BRING ----------------
-section("bring", "What I bring", "Think. Build. Research. Connect.")
+_cert_chips = chips(["Data Analytics · ShapeMySkill", "Generative AI & Agentic AI · GRASSTech (4-week practical training)"], "l")
+_course_chips = chips(["Data Analytics", "Database Management Systems", "Statistics", "Python Programming",
+                       "Business Intelligence", "Generative AI", "Agentic AI"])
 md(f"""
-<div class="grid g4 bring">
-<div class="card"><div class="tag">THINK</div><h3>Analytical Thinking</h3><p>Turning messy data into clear answers.</p>
-{chips(["Python", "SQL", "Statistics", "EDA"])}</div>
-<div class="card"><div class="tag">BUILD</div><h3>Technology &amp; AI</h3><p>LLM-powered apps with practical use.</p>
-{chips(["Generative AI", "Agentic AI", "Streamlit"])}</div>
-<div class="card"><div class="tag">RESEARCH</div><h3>Curiosity</h3><p>Paper reading, workshops and technical discussion.</p>
-{chips(["IEEE", "AI", "Data Science"])}</div>
-<div class="card"><div class="tag">CONNECT</div><h3>Communication</h3><p>Explaining ideas and leading a room.</p>
-{chips(["Hosting", "Public Speaking", "Coordination"])}</div>
+<div class="card" style="margin-top:18px">
+<div class="eyebrow">Education</div>
+<h3>Bachelor of Computer Applications (BCA) · CGPA 9.4/10</h3>
+<p>Institute of Innovation in Technology &amp; Management (IITM), Janakpuri, Delhi · Expected 2027</p>
+<div>{_course_chips}</div>
+<div class="eyebrow" style="margin-top:14px">Certifications</div>
+<div>{_cert_chips}</div>
 </div>
 """)
 
-# ---------------- FEATURED WORK (with filter) ----------------
-section("work", "Featured work", "Selected projects &amp; experiences",
-        "Filter by the area you care about.")
+# =====================================================================
+#  3. PROJECTS  (pick an area, see only that area)
+# =====================================================================
+section("projects", "Projects", "Choose an area to explore",
+        "Pick one of the three areas below and the page shows only that work.")
 
-PROJECTS = [
-    dict(cat=["AI & Research"], no="01", icon="🤖", title="MeetFlow",
-         sub="AI Meeting Assistant", stack=["Generative AI", "NLP", "Streamlit", "LangChain"],
-         q="How can a long meeting recording become something you can act on in minutes?",
-         flow=["Recording", "Transcript", "LLM Analysis", "Summary · Decisions · Actions"],
-         body="Built an LLM-powered app (Streamlit, LangChain) that turns meeting recordings into transcripts, "
-              "summaries, key points, decisions and action items, with an interactive interface to explore them."),
-    dict(cat=["Data"], no="02", icon="📈", title="Student Performance Analysis",
-         sub="Python · Statistics · Visualization", stack=["Python", "Statistics", "Charts"],
-         q="Which factors are most associated with how students perform?",
-         flow=["Collect", "Clean", "Statistical Analysis", "Charts & Reports"],
-         body="Collected and cleaned academic data using Python, applied statistical analysis to identify factors "
-              "affecting performance, and presented findings through charts and visual reports."),
-    dict(cat=["Data"], no="03", icon="⚖️", title="The 1 in the 0's",
-         sub="When Data Meets Discrimination", stack=["EDA", "Visualization", "Dashboards"],
-         q="What patterns, trends and potential bias can real-world data reveal?",
-         flow=["Data", "Cleaning", "EDA", "Visualization", "Insights"],
-         body="Explored real-world datasets to identify patterns, trends and potential bias, then presented the "
-              "findings through reports and dashboards in an easy-to-understand way."),
-    dict(cat=["Hosting", "Leadership"], no="04", icon="🎤", title="Microsoft · INCEPTA HER 1.0",
-         sub="Event Host / MC · Sept 2026", stack=["Emerging AI", "Cloud DevOps", "AdTech", "Industry Insights"],
-         q="How do you keep a technology event engaging for ~100 attendees?",
-         flow=["Stage Flow", "Speaker Intros", "Audience Engagement", "Transitions"],
-         body="Anchored a dynamic tech event featuring eminent speakers, managed stage flow and coordinated with "
-              "speakers and organizers to give every attendee a smooth, engaging experience."),
-    dict(cat=["AI & Research"], no="05", icon="🔬", title="IEEE · Research Work",
-         sub="Member · Research &amp; Technical Activities", stack=["Paper Reading", "Workshops", "Seminars"],
-         q="How does an emerging technology move from paper to practice?",
-         flow=["Read", "Discuss", "Workshop", "Apply"],
-         body="Active IEEE member taking part in research paper reading sessions, technical discussions, "
-              "workshops and seminars on technology, data and AI."),
-    dict(cat=["Leadership", "Hosting"], no="06", icon="🎓", title="Placement Cell Coordinator",
-         sub="IITM, Delhi · 2025 – Present", stack=["Coordination", "Data Accuracy", "Communication"],
-         q="How do recruiters, students and faculty stay perfectly in sync?",
-         flow=["Recruiters", "Student Coordinator", "Students & Faculty"],
-         body="Maintained placement records with accuracy, coordinated between companies and students, and "
-              "helped organise pre-placement sessions, workshops and GD/PI practice."),
-]
-
-FILTERS = ["All", "Data", "AI & Research", "Hosting", "Leadership"]
+AREAS = ["📊 Data & Analytics", "🤖 AI & Research", "🎤 Hosting & Leadership"]
 if hasattr(st, "pills"):
-    choice = st.pills("Filter", FILTERS, default="All", label_visibility="collapsed")
+    area = st.pills("Area", AREAS, default=AREAS[0], label_visibility="collapsed", key="area")
 else:
-    choice = st.radio("Filter", FILTERS, horizontal=True, label_visibility="collapsed")
-choice = choice or "All"
+    area = st.radio("Area", AREAS, horizontal=True, label_visibility="collapsed", key="area")
+area = area or AREAS[0]
 
-shown = [p for p in PROJECTS if choice == "All" or choice in p["cat"]]
-cards = ""
-for p in shown:
-    flow = '<i>→</i>'.join(f"<span>{s}</span>" for s in p["flow"])
-    cards += f"""
-    <div class="card proj"><div class="no">{p['no']}</div><div class="ico">{p['icon']}</div>
-    <h3>{p['title']}</h3><div class="eyebrow" style="letter-spacing:.1em">{p['sub']}</div>
-    <div class="q"><b>Question:</b> {p['q']}</div>
-    <div class="flow">{flow}</div>
-    <p>{p['body']}</p>{chips(p['stack'], 'l')}</div>
-    """
-md(f'<div class="grid g2">{cards}</div>')
+if area == AREAS[0]:
+    md(f"""
+    <div class="sub" style="margin-top:14px"><b style="color:#fff">I turn raw information into meaningful insights.</b></div>
+    <div style="margin-bottom:14px">{chips(["Python", "SQL", "Power BI", "Excel", "Statistics", "Data Cleaning", "EDA", "Visualization"])}</div>
+    <div class="grid g2">
+    {proj_card("01", "📈", "Student Performance Analysis", "Python · Statistics · Visualization",
+               "Which factors are most associated with how students perform?",
+               ["Collect", "Clean", "Statistical Analysis", "Charts & Reports"],
+               "Collected and cleaned academic data using Python, applied statistical analysis to identify factors affecting performance, and presented findings through charts and visual reports.",
+               ["Python", "Statistics", "Charts"])}
+    {proj_card("02", "⚖️", "The 1 in the 0's", "When Data Meets Discrimination",
+               "What patterns, trends and potential bias can real-world data reveal?",
+               ["Data", "Cleaning", "EDA", "Visualization", "Insights"],
+               "Explored real-world datasets to identify patterns, trends and potential bias, then presented the findings through reports and dashboards in an easy-to-understand way.",
+               ["EDA", "Visualization", "Dashboards"])}
+    </div>
+    <div class="card" style="margin-top:18px"><h3>Skill → Proof</h3>
+    <div class="proof"><b>Python</b><span>Student Performance Analysis</span></div>
+    <div class="proof"><b>Statistics</b><span>Student Performance Analysis</span></div>
+    <div class="proof"><b>EDA &amp; Visualization</b><span>The 1 in the 0's</span></div>
+    <div class="proof"><b>Data accuracy</b><span>Placement Cell records</span></div></div>
+    <div class="vizlabel">Raw data to insight, in motion</div>
+    """)
+    show_canvas(DATA_VIZ, 350)
+    resume_button("resume_data.pdf", "⬇ Download Data / Analytics resume", "dl_data_proj")
 
-# ---------------- DATA & ANALYTICS ----------------
-section("data", "01 · Data &amp; Analytics", "From raw data to actionable insights",
-        "Skills are only convincing with proof, so here is each tool next to where I used it.")
-md(f"""
-<div style="margin-bottom:16px">{chips(["Python", "SQL", "Power BI", "Excel", "Statistics", "Data Cleaning", "EDA", "Visualization"])}</div>
-<div class="grid g2">
-<div class="card"><h3>Skill → Proof</h3>
-<div class="proof"><b>Python</b><span>Student Performance Analysis</span></div>
-<div class="proof"><b>EDA &amp; Visualization</b><span>The 1 in the 0's</span></div>
-<div class="proof"><b>Statistics</b><span>Student Performance Analysis</span></div>
-<div class="proof"><b>Data accuracy</b><span>Placement Cell records</span></div>
-<div class="proof"><b>Power BI / Excel</b><span>Reports &amp; dashboards</span></div></div>
-<div class="card"><h3>My analysis approach</h3>
-<div class="flow" style="margin-top:14px"><span>Collect</span><i>→</i><span>Clean</span><i>→</i><span>Explore</span><i>→</i><span>Visualize</span><i>→</i><span>Insight</span></div>
-<p>Relevant coursework: Data Analytics, Database Management Systems, Statistics, Python Programming, Business Intelligence.</p>
-<p>Certified: <b>Data Analytics – ShapeMySkill</b>.</p></div>
-</div>
-""")
+elif area == AREAS[1]:
+    md(f"""
+    <div class="sub" style="margin-top:14px"><b style="color:#fff">I explore AI through practical projects and research.</b></div>
+    <div style="margin-bottom:14px">{chips(["Generative AI", "Agentic AI", "NLP", "LLMs", "Python", "LangChain", "Streamlit", "APIs", "Git/GitHub"])}</div>
+    <div class="grid g2">
+    {proj_card("01", "🤖", "MeetFlow", "AI Meeting Assistant",
+               "How can a long meeting recording become something you can act on in minutes?",
+               ["Recording", "Transcript", "LLM Analysis", "Summary · Decisions · Actions"],
+               "Built an LLM-powered app (Streamlit, LangChain) that turns meeting recordings into transcripts, summaries, key points, decisions and action items, with an interactive interface to explore them.",
+               ["Generative AI", "NLP", "Streamlit", "LangChain"])}
+    {proj_card("02", "🔬", "IEEE · Research Work", "Member · Research &amp; Technical Activities",
+               "How does an emerging technology move from paper to practice?",
+               ["Read", "Discuss", "Workshop", "Apply"],
+               "Active IEEE member taking part in research paper reading sessions, technical discussions, workshops and seminars on technology, data and AI.",
+               ["Paper Reading", "Workshops", "Seminars"])}
+    </div>
+    <div class="pipe" style="margin-top:18px">
+    <div class="node">🎙️<br>Meeting<br>Recording</div><div class="arrow">→</div>
+    <div class="node">📝<br>Transcription</div><div class="arrow">→</div>
+    <div class="node">🧠<br>LLM<br>Analysis</div><div class="arrow">→</div>
+    <div class="outs"><div>Summary</div><div>Key Points</div><div>Decisions</div><div>Action Items</div></div>
+    </div>
+    <div class="vizlabel">How MeetFlow turns a meeting into action items</div>
+    """)
+    show_canvas(NN_VIZ, 310)
+    resume_button("resume_ai.pdf", "⬇ Download AI / Research resume", "dl_ai_proj")
 
-md('<div class="vizlabel">Raw data to insight, in motion</div>')
-show_canvas(DATA_VIZ, 350)
+else:
+    md(f"""
+    <div class="sub" style="margin-top:14px"><b style="color:#fff">I turn events into engaging experiences.</b></div>
+    <div style="margin-bottom:14px">{chips(["Anchoring", "Public Speaking", "Stage Flow", "Coordination", "Voice Modulation", "Script Writing"])}</div>
+    <div class="stage">
+    <div class="eyebrow" style="color:#7FA0FF">Featured event</div>
+    <h3>INCEPTA HER 1.0 · Microsoft</h3>
+    <p><b>Role:</b> Event Host / MC &nbsp;·&nbsp; <b>Audience:</b> ~100 &nbsp;·&nbsp; <b>Sept 2026</b></p>
+    <p>Topics: Emerging AI · Cloud DevOps · AdTech · Industry Insights</p>
+    <div style="margin-top:8px">{chips(["Stage Flow", "Speaker Introductions", "Audience Engagement", "Transitions", "Event Coordination"])}</div>
+    </div>
+    <div class="grid g4" style="margin-top:18px">
+    <div class="mini">🏫 Morning Assemblies</div><div class="mini">🍎 Teachers' Day</div>
+    <div class="mini">🎓 School Farewell</div><div class="mini">🎉 Freshers' Party</div>
+    <div class="mini">🥂 College Farewell</div><div class="mini">🎭 Annual College Fest</div>
+    <div class="mini">💻 IT &amp; Technical Events</div><div class="mini">🛠️ Workshops &amp; Hackathons</div>
+    </div>
+    <div class="grid g2" style="margin-top:18px">
+    {proj_card("01", "🎓", "Placement Cell Coordinator", "IITM, Delhi · 2025 – Present",
+               "How do recruiters, students and faculty stay perfectly in sync?",
+               ["Recruiters", "Student Coordinator", "Students & Faculty"],
+               "Maintained placement records with accuracy, coordinated between companies and students, and helped organise pre-placement sessions, workshops and GD/PI practice.",
+               ["Coordination", "Data Accuracy", "Communication"])}
+    <div class="card"><div class="ico">🎤</div><h3>On stage, under pressure</h3>
+    <p>Voice modulation, script writing and calm handling of live changes in schedule and stage flow.</p>
+    <p>Appreciated by faculty and organizers for audience engagement, and frequently selected to anchor major institutional events.</p></div>
+    </div>
+    """)
+    resume_button("resume_hosting.pdf", "⬇ Download Hosting / Communication resume", "dl_host_proj")
 
-# ---------------- AI & RESEARCH ----------------
-section("ai", "02 · AI &amp; Research", "Exploring how intelligent systems solve practical problems")
-md(f"""
-<div style="margin-bottom:16px">{chips(["Generative AI", "Agentic AI", "NLP", "LLMs", "Python", "LangChain", "Streamlit", "APIs", "Git/GitHub"])}</div>
-<div class="pipe">
-<div class="node">🎙️<br>Meeting<br>Recording</div><div class="arrow">→</div>
-<div class="node">📝<br>Transcription</div><div class="arrow">→</div>
-<div class="node">🧠<br>LLM<br>Analysis</div><div class="arrow">→</div>
-<div class="outs"><div>Summary</div><div>Key Points</div><div>Decisions</div><div>Action Items</div></div>
-</div>
-<div class="grid g2" style="margin-top:18px">
-<div class="card"><h3>MeetFlow</h3><p>An LLM-powered meeting assistant with an interactive interface for exploring what was said, decided and assigned.</p></div>
-<div class="card"><h3>Research · IEEE Member</h3><p>Research paper reading sessions, workshops, seminars and technical discussions on AI and Data Science. Also delivered academic and technical presentations that simplify complex information.</p></div>
-</div>
-""")
-
-md('<div class="vizlabel">How MeetFlow turns a meeting into action items</div>')
-show_canvas(NN_VIZ, 310)
-
-# ---------------- EXPERIENCE ----------------
+# =====================================================================
+#  4. EXPERIENCE
+# =====================================================================
 section("experience", "Experience", "A timeline of what I've done")
 md("""
 <div class="tl">
@@ -617,34 +616,13 @@ md("""
 </div>
 """)
 
-# ---------------- HOSTING & LEADERSHIP ----------------
-section("stage", "03 · Hosting &amp; Leadership", "On stage", "Hosting treated as the professional skill it is.")
-md(f"""
-<div class="stage">
-<div class="eyebrow" style="color:#7FA0FF">Featured event</div>
-<h3>INCEPTA HER 1.0 · Microsoft</h3>
-<p><b>Role:</b> Event Host / MC &nbsp;·&nbsp; <b>Audience:</b> ~100 &nbsp;·&nbsp; <b>Sept 2026</b></p>
-<p>Topics: Emerging AI · Cloud DevOps · AdTech · Industry Insights</p>
-<div style="margin-top:8px">{chips(["Stage Flow", "Speaker Introductions", "Audience Engagement", "Transitions", "Event Coordination"])}</div>
-</div>
-<div class="grid g4" style="margin-top:18px">
-<div class="mini">🏫 Morning Assemblies</div><div class="mini">🍎 Teachers' Day</div>
-<div class="mini">🎓 School Farewell</div><div class="mini">🎉 Freshers' Party</div>
-<div class="mini">🥂 College Farewell</div><div class="mini">🎭 Annual College Fest</div>
-<div class="mini">💻 IT &amp; Technical Events</div><div class="mini">🛠️ Workshops &amp; Hackathons</div>
-</div>
-<div class="grid g3" style="margin-top:18px">
-<div class="card"><h3>Public speaking</h3><p>Voice modulation, script writing and simplifying complex ideas for diverse audiences.</p></div>
-<div class="card"><h3>Crisis handling</h3><p>Calm, quick adjustments to live changes in schedule and stage flow.</p></div>
-<div class="card"><h3>Recognition</h3><p>Appreciated by faculty and organizers for audience engagement and stage presence.</p></div>
-</div>
-""")
-
-# ---------------- ACHIEVEMENTS ----------------
-section("achievements", "Achievements", "Proof, not a certificate graveyard")
+# =====================================================================
+#  5. ACHIEVEMENTS
+# =====================================================================
+section("achievements", "Achievements", "Highlights so far")
 md("""
 <div class="grid g3 badge">
-<div class="card"><div class="ico">🏆</div><h3>2nd Best Project</h3><p>Among 65 students, Generative AI &amp; Agentic AI training</p></div>
+<div class="card"><div class="ico">🏆</div><h3>Top 2 Project</h3><p>Among many students, Generative AI &amp; Agentic AI training</p></div>
 <div class="card"><div class="ico">🎤</div><h3>Microsoft Event Host</h3><p>INCEPTA HER 1.0, Sept 2026</p></div>
 <div class="card"><div class="ico">🔬</div><h3>IEEE Member</h3><p>Research &amp; technical activities</p></div>
 <div class="card"><div class="ico">🎓</div><h3>Placement Cell Coordinator</h3><p>Student–recruiter coordination at IITM</p></div>
@@ -653,48 +631,30 @@ md("""
 </div>
 """)
 
-# ---------------- SKILLS ----------------
+# =====================================================================
+#  6. SKILLS
+# =====================================================================
 section("skills", "Skills", "Organised by what they're for")
+_sk_prog = chips(["Python", "SQL", "C", "Java"])
+_sk_data = chips(["Power BI", "Excel", "Google Sheets", "Data Cleaning", "EDA", "Statistics", "Visualization", "Jupyter"])
+_sk_ai = chips(["Generative AI", "Agentic AI", "NLP", "ML Fundamentals", "Classification", "Regression"])
+_sk_tools = chips(["Streamlit", "LangChain", "APIs", "Git/GitHub", "Google Forms", "SurveyMonkey"])
+_sk_pro = chips(["Communication", "Public Speaking", "Anchoring", "Stage Management", "Leadership", "Team Collaboration",
+                 "Problem Solving", "Time Management", "Adaptability"], "l")
 md(f"""
 <div class="grid g3">
-<div class="card"><h3>Programming</h3>{chips(["Python", "SQL", "C", "Java"])}</div>
-<div class="card"><h3>Data</h3>{chips(["Power BI", "Excel", "Google Sheets", "Data Cleaning", "EDA", "Statistics", "Visualization", "Jupyter"])}</div>
-<div class="card"><h3>AI</h3>{chips(["Generative AI", "Agentic AI", "NLP", "ML Fundamentals", "Classification", "Regression"])}</div>
-<div class="card"><h3>Tools</h3>{chips(["Streamlit", "LangChain", "APIs", "Git/GitHub", "Google Forms", "SurveyMonkey"])}</div>
-<div class="card"><h3>Professional</h3>{chips(["Communication", "Public Speaking", "Leadership", "Team Collaboration", "Problem Solving", "Time Management", "Adaptability"], "l")}</div>
+<div class="card"><h3>Programming</h3>{_sk_prog}</div>
+<div class="card"><h3>Data</h3>{_sk_data}</div>
+<div class="card"><h3>AI</h3>{_sk_ai}</div>
+<div class="card"><h3>Tools</h3>{_sk_tools}</div>
+<div class="card"><h3>Professional</h3>{_sk_pro}</div>
 <div class="card"><h3>Languages</h3><p><b>Hindi</b>: Native<br><b>English</b>: Professional Working Proficiency</p></div>
 </div>
 """)
 
-# ---------------- BEYOND THE SCREEN ----------------
-section("beyond", "Beyond the screen", "The person behind the projects")
-md("""
-<div class="grid g4">
-<div class="mini">🎤 Hosting</div><div class="mini">📢 Public Speaking</div>
-<div class="mini">📚 Research &amp; Learning</div><div class="mini">💡 Technology Exploration</div>
-</div>
-""")
-
-# ---------------- RESUMES ----------------
-section("resume", "Resumes", "Looking for something specific?", "Three focused resumes, one person.")
-RESUMES = [
-    ("📊", "Data / Analytics", "Data Analytics · Python · SQL · Power BI", "resume_data.pdf"),
-    ("🤖", "AI / Research", "Generative AI · Agentic AI · Research · Projects", "resume_ai.pdf"),
-    ("🎤", "Hosting / Communication", "Anchoring · MC · Public Speaking · Events", "resume_hosting.pdf"),
-]
-cols = st.columns(3, gap="medium")
-for col, (icon, title, desc, fname) in zip(cols, RESUMES):
-    with col:
-        md(f'<div class="card"><div class="ico">{icon}</div><h3>{title}</h3><p>{desc}</p></div>')
-        path = os.path.join(HERE, fname)
-        if os.path.exists(path):
-            with open(path, "rb") as f:
-                st.download_button("Download resume", f.read(), file_name=fname,
-                                   mime="application/pdf", key=fname, use_container_width=True)
-        else:
-            st.caption(f"Add `{fname}` next to app.py to enable download.")
-
-# ---------------- CONTACT ----------------
+# =====================================================================
+#  7. CONTACT
+# =====================================================================
 extra = ""
 if LINKEDIN_URL:
     extra += f'<a class="btn s" href="{LINKEDIN_URL}" target="_blank">LinkedIn</a>'
@@ -708,5 +668,14 @@ md(f"""
 <div class="btns" style="justify-content:center">
 <a class="btn p" href="mailto:{EMAIL}">Let's Connect →</a>{extra}
 </div></div>
-<div class="foot">© 2026 Hritvi Maheshwari · Built with Python &amp; Streamlit</div>
 """)
+md('<div class="sub" style="margin:26px 0 8px;text-align:center;max-width:none"><b style="color:#fff">Looking for something specific? Pick a resume.</b></div>')
+rc = st.columns(3, gap="medium")
+with rc[0]:
+    resume_button("resume_data.pdf", "📊 Data / Analytics", "dl_data")
+with rc[1]:
+    resume_button("resume_ai.pdf", "🤖 AI / Research", "dl_ai")
+with rc[2]:
+    resume_button("resume_hosting.pdf", "🎤 Hosting / Communication", "dl_host")
+
+md('<div class="foot">© 2026 Hritvi Maheshwari · Built with Python &amp; Streamlit</div>')
