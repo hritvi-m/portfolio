@@ -25,7 +25,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 # ---------------- EDIT THESE ----------------
 EMAIL = "maheshwarihritvi@gmail.com"
 PHONE = "+91 9315334858"
-LINKEDIN_URL = ""   # paste your LinkedIn profile link here, e.g. "https://www.linkedin.com/in/your-id"
+LINKEDIN_URL = "https://www.linkedin.com/in/hritvi-maheshwari-b570b224a"
 GITHUB_URL = ""     # paste your GitHub link here (leave empty to hide the button)
 # --------------------------------------------
 
