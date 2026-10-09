@@ -13,6 +13,7 @@ import base64
 import os
 
 import streamlit as st
+import streamlit.components.v1 as components
 
 st.set_page_config(
     page_title="Hritvi Maheshwari | Data - AI - Research - Communication",
@@ -143,7 +144,84 @@ div[role="radiogroup"] label p{color:var(--silver);}
 .stCaption,[data-testid="stCaptionContainer"]{color:var(--mut)!important;}
 .stDownloadButton button{background:var(--blue);color:#fff;border:none;border-radius:999px;font-weight:600;}
 .stDownloadButton button:hover{box-shadow:0 0 22px rgba(43,91,255,.7);color:#fff;}
-@media (max-width:700px){.hero{padding:34px 22px}.hero h1{font-size:3.2rem}.avatar{width:180px;height:180px}.sec h2{font-size:2rem}}
+/* ===== MOTION & EXTRA VISUALS ===== */
+@property --p{syntax:'<number>';inherits:false;initial-value:94;}
+@property --ang{syntax:'<angle>';inherits:false;initial-value:0deg;}
+
+.avatar-wrap{position:relative;z-index:1;width:250px;height:250px;margin:30px;}
+.avatar-wrap .avatar{width:250px;height:250px;animation:breathe 4s ease-in-out infinite;}
+@keyframes breathe{0%,100%{box-shadow:0 0 60px rgba(43,91,255,.45),0 20px 60px rgba(0,0,0,.6)}50%{box-shadow:0 0 110px rgba(43,91,255,.85),0 20px 60px rgba(0,0,0,.6)}}
+.orbit{position:absolute;border-radius:50%;pointer-events:none;}
+.orbit.o1{inset:-26px;border:1px dashed rgba(127,160,255,.4);animation:spin 22s linear infinite;}
+.orbit.o2{inset:-52px;border:1px dotted rgba(127,160,255,.25);animation:spin 36s linear infinite reverse;}
+.orbit:after{content:"";position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;border-radius:50%;background:#7FA0FF;box-shadow:0 0 14px 3px rgba(77,124,255,.9);}
+@keyframes spin{to{transform:rotate(360deg)}}
+.fchip{position:absolute;background:rgba(8,16,42,.88);border:1px solid rgba(127,160,255,.45);color:#fff;font-weight:700;font-size:.78rem;padding:7px 13px;border-radius:999px;backdrop-filter:blur(6px);box-shadow:0 0 20px rgba(43,91,255,.4);animation:floaty 5s ease-in-out infinite;white-space:nowrap;}
+.fchip.f1{top:-4px;left:-46px;}
+.fchip.f2{top:46%;right:-62px;animation-delay:-1.6s;}
+.fchip.f3{bottom:-8px;left:-6px;animation-delay:-3.2s;}
+@keyframes floaty{0%,100%{translate:0 0}50%{translate:0 -10px}}
+.spark{position:absolute;color:#9DB6FF;text-shadow:0 0 14px #2B5BFF;animation:twinkle 2.6s ease-in-out infinite;pointer-events:none;}
+.spark.sp1{top:-58px;right:-6px;font-size:1.6rem;}
+.spark.sp2{bottom:-52px;right:30px;font-size:1rem;animation-delay:-1.3s;}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7) rotate(0)}50%{opacity:1;transform:scale(1.25) rotate(45deg)}}
+
+.hero h1 .b{background:linear-gradient(90deg,#2B5BFF,#8FB0FF,#2B5BFF);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;filter:drop-shadow(0 0 18px rgba(43,91,255,.55));animation:shine 5s linear infinite;}
+@keyframes shine{to{background-position:-200% 0}}
+.rotline{font-family:'Sora';font-size:1rem;color:#AEB9D8;margin:0 0 14px;display:flex;gap:7px;align-items:center;flex-wrap:wrap;}
+.rot{display:inline-block;height:1.6em;overflow:hidden;vertical-align:bottom;}
+.rot-in{display:flex;flex-direction:column;animation:rot 9s cubic-bezier(.7,0,.2,1) infinite;}
+.rot-in b{height:1.6em;line-height:1.6em;color:#7FA0FF;font-weight:700;}
+@keyframes rot{0%,18%{transform:translateY(0)}25%,43%{transform:translateY(-1.6em)}50%,68%{transform:translateY(-3.2em)}75%,93%{transform:translateY(-4.8em)}100%{transform:translateY(-6.4em)}}
+
+.marq{overflow:hidden;margin-top:26px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;
+ -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);}
+.marq-in{display:flex;width:max-content;animation:marq 32s linear infinite;}
+.marq:hover .marq-in{animation-play-state:paused;}
+.marq-in span{font-family:'Anton','Sora';text-transform:uppercase;letter-spacing:.09em;font-size:1.15rem;color:#5B77C9;white-space:nowrap;margin-right:34px;}
+.marq-in span.w{color:var(--silver);}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+.ring{--p:94;width:96px;height:96px;border-radius:50%;margin:0 auto 8px;position:relative;display:flex;align-items:center;justify-content:center;
+ background:conic-gradient(#4D7CFF calc(var(--p)*1%),#101C4A 0);box-shadow:0 0 30px rgba(43,91,255,.4);animation:fillring 2.4s ease-out both;}
+.ring:before{content:"";position:absolute;inset:9px;border-radius:50%;background:#060C26;}
+.stat .ring b{position:relative;z-index:1;font-size:1.9rem;}
+@keyframes fillring{from{--p:0}to{--p:94}}
+
+.card:after{content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;pointer-events:none;background:linear-gradient(100deg,transparent,rgba(130,160,255,.14),transparent);transform:skewX(-20deg);transition:left .8s ease;}
+.card:hover:after{left:150%;}
+.ico{display:inline-block;animation:bob 3.6s ease-in-out infinite;}
+@keyframes bob{0%,100%{translate:0 0}50%{translate:0 -5px}}
+
+.tl .it:before{animation:ping 2.2s ease-out infinite;}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(77,124,255,.75)}100%{box-shadow:0 0 0 16px rgba(77,124,255,0)}}
+.tl{border-image:linear-gradient(180deg,#2B5BFF,#14235A 70%,transparent) 1;}
+
+.stage{border:2px solid transparent;background:radial-gradient(500px 300px at 90% 0%,rgba(43,91,255,.45),transparent 60%) padding-box,linear-gradient(135deg,#050B22,#0A1A66) padding-box,conic-gradient(from var(--ang),rgba(43,91,255,.08) 0%,#8FB0FF 14%,rgba(43,91,255,.08) 34%,rgba(43,91,255,.08) 100%) border-box;animation:angspin 7s linear infinite;}
+@keyframes angspin{to{--ang:360deg}}
+
+.pipe .arrow{animation:nudge 1.6s ease-in-out infinite;}
+@keyframes nudge{0%,100%{translate:-4px 0;opacity:.35}50%{translate:6px 0;opacity:1}}
+.pipe .node{animation:nodeglow 4.5s ease-in-out infinite;}
+.pipe .node:nth-child(3){animation-delay:1.1s;}
+.pipe .node:nth-child(5){animation-delay:2.2s;}
+@keyframes nodeglow{0%,70%,100%{box-shadow:0 0 0 rgba(43,91,255,0);border-color:rgba(120,150,255,.3)}35%{box-shadow:0 0 26px rgba(43,91,255,.85);border-color:#7FA0FF}}
+.pipe .outs div{animation:outpulse 3s ease-in-out infinite;}
+.pipe .outs div:nth-child(2){animation-delay:.3s}.pipe .outs div:nth-child(3){animation-delay:.6s}.pipe .outs div:nth-child(4){animation-delay:.9s}
+@keyframes outpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.45)}}
+
+.vizlabel{display:flex;align-items:center;gap:10px;margin:26px 0 10px;color:var(--silver);font-weight:700;font-size:.95rem;}
+.vizlabel:before{content:"";width:9px;height:9px;border-radius:50%;background:#4D7CFF;box-shadow:0 0 12px #4D7CFF;animation:ping 1.8s ease-out infinite;}
+
+@supports (animation-timeline: view()){
+ .card,.mini,.stat,.tl .it,.pipe,.stage,.marq{animation-name:reveal;animation-duration:1ms;animation-timing-function:linear;animation-fill-mode:both;animation-timeline:view();animation-range:entry 0% entry 40%;}
+ .ring{animation:fillring linear both;animation-timeline:view();animation-range:entry 10% cover 45%;}
+ .stage{animation:reveal linear both,angspin 7s linear infinite;animation-timeline:view(),auto;animation-range:entry 0% entry 40%,normal;}
+ .pipe .node,.pipe .arrow,.pipe .outs div,.ico,.tl .it:before{animation-timeline:auto;}
+ @keyframes reveal{from{opacity:0;translate:0 46px;scale:.96}to{opacity:1;translate:0 0;scale:1}}
+}
+@media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;}}
+@media (max-width:700px){.hero{padding:34px 22px}.hero h1{font-size:3.2rem}.avatar-wrap{width:180px;height:180px;margin:36px auto}.avatar-wrap .avatar{width:180px;height:180px}.fchip.f1{left:-24px}.fchip.f2{right:-30px}.sec h2{font-size:2rem}}
 </style>
 """
 
@@ -174,6 +252,149 @@ def photo_html():
     return '<div class="mono">HM</div>'
 
 
+DATA_VIZ = """<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:transparent;font-family:Inter,system-ui,sans-serif}
+.wrap{position:relative;border:1px solid #14235A;border-radius:22px;overflow:hidden;background:linear-gradient(160deg,#0A1433,#050B22)}
+canvas{display:block;width:100%;height:290px}
+.steps{display:flex;gap:8px;justify-content:center;padding:2px 12px 16px;flex-wrap:wrap}
+.steps span{font-size:12px;font-weight:600;padding:5px 13px;border-radius:999px;color:#8D9BBF;border:1px solid #14235A;transition:.3s}
+.steps span.on{background:#2B5BFF;color:#fff;border-color:#2B5BFF;box-shadow:0 0 16px rgba(43,91,255,.7)}
+</style></head><body><div class="wrap"><canvas id="c"></canvas><div class="steps" id="s"></div></div>
+<script>
+(function(){
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+var names=['Collect','Clean','Explore','Visualize','Insight'];
+var caps=['Raw, messy data','Removing the noise','Finding structure','Drawing the pattern','Insight'];
+var sEl=document.getElementById('s');
+names.forEach(function(n){var e=document.createElement('span');e.textContent=n;sEl.appendChild(e);});
+var chips=sEl.children,cur=-1;
+var W=300,H=290,dpr=window.devicePixelRatio||1;
+function size(){W=cv.clientWidth||300;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+size();window.addEventListener('resize',size);
+function rnd(a,b){return a+Math.random()*(b-a);}
+function ease(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x);}
+var N=66,pts=[];
+for(var i=0;i<N;i++){pts.push({sx:rnd(.04,.96),sy:rnd(.06,.94),n:rnd(-1,1),out:Math.random()<.17,ph:rnd(0,6.28)});}
+var T=10000;
+function frame(now){
+  var t=(now%T)/T;
+  ctx.clearRect(0,0,W,H);
+  var L=46,R=W-28,Tp=34,B=H-30;
+  var gA=Math.min(1,t/.05)*Math.min(1,(1-t)/.06);
+  ctx.globalAlpha=gA;
+  ctx.lineWidth=1;
+  for(var g=1;g<5;g++){var gy=B-(B-Tp)*g/5;ctx.beginPath();ctx.moveTo(L,gy);ctx.lineTo(R,gy);ctx.strokeStyle='rgba(120,150,255,.07)';ctx.stroke();}
+  ctx.beginPath();ctx.moveTo(L,Tp);ctx.lineTo(L,B);ctx.lineTo(R,B);ctx.strokeStyle='rgba(120,150,255,.3)';ctx.stroke();
+  var cleanP=ease((t-.2)/.18),moveP=ease((t-.4)/.2),lineP=ease((t-.62)/.18);
+  for(var i=0;i<N;i++){
+    var p=pts[i];
+    var x=L+(R-L)*p.sx+Math.sin(now/700+p.ph)*3*(1-moveP);
+    var yS=Tp+(B-Tp)*p.sy+Math.cos(now/800+p.ph)*3*(1-moveP);
+    var yT=B-(B-Tp)*(.12+.72*p.sx)+p.n*16;
+    var y=yS+(yT-yS)*moveP;
+    var a=1,r=3.4,col='#7FA0FF';
+    if(p.out){col='#9AA3B8';a=1-cleanP;r=3.4*(1-cleanP*.6);}
+    if(a<=0.01)continue;
+    ctx.globalAlpha=gA*a;
+    ctx.beginPath();ctx.arc(x,y,r,0,6.2832);
+    ctx.fillStyle=col;ctx.shadowColor=col;ctx.shadowBlur=p.out?0:8;ctx.fill();
+  }
+  ctx.shadowBlur=0;ctx.globalAlpha=gA;
+  if(lineP>0){
+    var x0=L,y0=B-(B-Tp)*.12,x1=R,y1=B-(B-Tp)*.84;
+    var xe=x0+(x1-x0)*lineP,ye=y0+(y1-y0)*lineP;
+    ctx.beginPath();ctx.moveTo(x0,y0);ctx.lineTo(xe,ye);
+    ctx.strokeStyle='#4D7CFF';ctx.lineWidth=3;ctx.lineCap='round';ctx.shadowColor='#2B5BFF';ctx.shadowBlur=16;ctx.stroke();
+    ctx.shadowBlur=0;
+    if(t>.8){
+      var pu=(Math.sin(now/260)+1)/2;
+      ctx.beginPath();ctx.arc(x1,y1,8+pu*7,0,6.2832);ctx.strokeStyle='rgba(127,160,255,'+(0.7-pu*.5)+')';ctx.lineWidth=2;ctx.stroke();
+      ctx.beginPath();ctx.arc(x1,y1,5,0,6.2832);ctx.fillStyle='#fff';ctx.fill();
+    }
+  }
+  var idx=t<.2?0:t<.4?1:t<.62?2:t<.8?3:4;
+  ctx.globalAlpha=gA;ctx.fillStyle=idx==4?'#fff':'#9DB4FF';
+  ctx.font='700 13px Inter,system-ui,sans-serif';ctx.textAlign='left';
+  ctx.fillText(caps[idx],L,20);
+  ctx.globalAlpha=1;
+  if(idx!==cur){cur=idx;for(var k=0;k<chips.length;k++){chips[k].className=(k===idx)?'on':'';}}
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script></body></html>"""
+
+NN_VIZ = """<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:transparent;font-family:Inter,system-ui,sans-serif}
+.wrap{border:1px solid #14235A;border-radius:22px;overflow:hidden;background:radial-gradient(500px 260px at 85% 0%,rgba(43,91,255,.3),transparent 60%),linear-gradient(160deg,#0A1433,#050B22)}
+canvas{display:block;width:100%;height:300px}
+</style></head><body><div class="wrap"><canvas id="c"></canvas></div>
+<script>
+(function(){
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+var W=300,H=300,dpr=window.devicePixelRatio||1,layers=[3,6,6,4],nodes=[];
+var inL=['Recording','Transcript','Prompt'],outL=['Summary','Key Points','Decisions','Action Items'];
+function build(){
+  W=cv.clientWidth||300;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+  var narrow=W<520,xs=narrow?[.24,.42,.58,.68]:[.2,.4,.58,.76];
+  nodes=[];
+  layers.forEach(function(n,li){var col=[];for(var i=0;i<n;i++){col.push({x:W*xs[li],y:H*(i+1)/(n+1),glow:0});}nodes.push(col);});
+}
+build();window.addEventListener('resize',build);
+var pulses=[],last=0,spawn=0;
+function ease(x){return x*x*(3-2*x);}
+function newPulse(){
+  var path=[],li;
+  for(li=0;li<layers.length;li++){path.push(nodes[li][Math.floor(Math.random()*layers[li])]);}
+  pulses.push({path:path,seg:0,t:0,sp:.9+Math.random()*.5});
+}
+function frame(now){
+  var dt=Math.min(.05,(now-last)/1000||0.016);last=now;
+  spawn-=dt;if(spawn<=0){newPulse();spawn=.28+Math.random()*.25;}
+  ctx.clearRect(0,0,W,H);
+  var narrow=W<520,fs=narrow?10:12;
+  ctx.lineWidth=1;
+  for(var li=0;li<layers.length-1;li++){
+    nodes[li].forEach(function(a){nodes[li+1].forEach(function(b){
+      ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.strokeStyle='rgba(110,140,255,.10)';ctx.stroke();});});
+  }
+  for(var i=pulses.length-1;i>=0;i--){
+    var p=pulses[i];p.t+=dt*p.sp;
+    if(p.t>=1){p.seg++;p.t=0;p.path[p.seg].glow=1;if(p.seg>=p.path.length-1){pulses.splice(i,1);continue;}}
+    var a=p.path[p.seg],b=p.path[p.seg+1],e=ease(p.t);
+    var x=a.x+(b.x-a.x)*e,y=a.y+(b.y-a.y)*e;
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(x,y);ctx.strokeStyle='rgba(127,160,255,.55)';ctx.lineWidth=1.6;ctx.stroke();
+    ctx.beginPath();ctx.arc(x,y,3.6,0,6.2832);ctx.fillStyle='#fff';ctx.shadowColor='#4D7CFF';ctx.shadowBlur=14;ctx.fill();ctx.shadowBlur=0;
+  }
+  ctx.lineWidth=1;
+  nodes.forEach(function(col,li){col.forEach(function(n,i){
+    n.glow=Math.max(0,n.glow-dt*1.6);
+    var r=li==0||li==3?7:5.5;
+    ctx.beginPath();ctx.arc(n.x,n.y,r+n.glow*2.5,0,6.2832);
+    ctx.fillStyle=n.glow>0.02?'rgba(127,160,255,'+(0.35+n.glow*.65)+')':'#0F1D4D';
+    ctx.strokeStyle=li==3?'#4D7CFF':'rgba(127,160,255,.6)';
+    ctx.shadowColor='#2B5BFF';ctx.shadowBlur=n.glow*18;ctx.fill();ctx.shadowBlur=0;ctx.stroke();
+    ctx.font='600 '+fs+'px Inter,system-ui,sans-serif';ctx.textBaseline='middle';
+    if(li==0){ctx.textAlign='right';ctx.fillStyle='#AEB9D8';ctx.fillText(inL[i],n.x-r-8,n.y);}
+    if(li==3){ctx.textAlign='left';ctx.fillStyle=n.glow>0.1?'#fff':'#8FA3D8';ctx.fillText(outL[i],n.x+r+8,n.y);}
+  });});
+  ctx.textAlign='center';ctx.fillStyle='#6E87D6';ctx.font='700 '+(fs-1)+'px Inter,system-ui,sans-serif';ctx.textBaseline='alphabetic';
+  ctx.fillText('AI PROCESSING',(nodes[1][0].x+nodes[2][0].x)/2,H-12);
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script></body></html>"""
+
+
+def show_canvas(html, height):
+    """Run an animated canvas (JavaScript) inside a Streamlit component. Fails silently if unavailable."""
+    try:
+        components.html(html, height=height)
+    except Exception:
+        pass
+
+
 md(CSS)
 
 # ---------------- NAV ----------------
@@ -193,6 +414,7 @@ md(f"""
 <div class="kicker">Portfolio · 2026</div>
 <h1><span class="a">Hritvi</span><br><span class="b">Maheshwari</span></h1>
 <div class="roles">Data &nbsp;|&nbsp; AI &nbsp;|&nbsp; Research &nbsp;|&nbsp; Communication</div>
+<div class="rotline">I love working with <span class="rot"><span class="rot-in"><b>data</b><b>AI</b><b>research</b><b>audiences</b><b>data</b></span></span></div>
 <p>I explore the intersection of technology, data and communication, building practical projects,
 contributing to research, and creating engaging experiences on and off the stage.</p>
 <div class="btns">
@@ -202,9 +424,15 @@ contributing to research, and creating engaging experiences on and off the stage
 </div>
 <div class="meta">📍 Delhi, India &nbsp;·&nbsp; BCA, IITM Janakpuri &nbsp;·&nbsp; Expected Graduation 2027</div>
 </div>
-<div class="avatar">{photo_html()}</div>
+<div class="avatar-wrap"><div class="orbit o2"></div><div class="orbit o1"></div><div class="avatar">{photo_html()}</div><div class="fchip f1">📊 Data</div><div class="fchip f2">🤖 AI</div><div class="fchip f3">🎤 Host</div><div class="spark sp1">✦</div><div class="spark sp2">✦</div></div>
 </div>
 """)
+
+# ---------------- MARQUEE ----------------
+_items = ["Python", "SQL", "Power BI", "Excel", "Statistics", "Generative AI", "Agentic AI", "NLP", "LangChain",
+          "Streamlit", "Research", "Public Speaking", "Anchoring", "Leadership"]
+_row = "".join(f'<span>{t}</span><span class="w">✦</span>' for t in _items)
+md(f'<div class="marq"><div class="marq-in">{_row}{_row}</div></div>')
 
 # ---------------- CHOOSE YOUR PATH ----------------
 section("path", "Start here", "What are you here to explore?",
@@ -244,7 +472,7 @@ with c1:
 with c2:
     md("""
     <div class="grid" style="grid-template-columns:1fr 1fr">
-    <div class="stat"><b>9.4/10</b><span>CGPA</span></div>
+    <div class="stat"><div class="ring"><b>9.4</b></div><span>CGPA out of 10</span></div>
     <div class="stat"><b>2027</b><span>Expected Graduation</span></div>
     <div class="stat"><b>2nd / 65</b><span>Best Project, GenAI &amp; Agentic AI</span></div>
     <div class="stat"><b>100–1000+</b><span>Audience sizes hosted</span></div>
@@ -348,6 +576,9 @@ md(f"""
 </div>
 """)
 
+md('<div class="vizlabel">Raw data to insight, in motion</div>')
+show_canvas(DATA_VIZ, 350)
+
 # ---------------- AI & RESEARCH ----------------
 section("ai", "02 · AI &amp; Research", "Exploring how intelligent systems solve practical problems")
 md(f"""
@@ -363,6 +594,9 @@ md(f"""
 <div class="card"><h3>Research · IEEE Member</h3><p>Research paper reading sessions, workshops, seminars and technical discussions on AI and Data Science. Also delivered academic and technical presentations that simplify complex information.</p></div>
 </div>
 """)
+
+md('<div class="vizlabel">How MeetFlow turns a meeting into action items</div>')
+show_canvas(NN_VIZ, 310)
 
 # ---------------- EXPERIENCE ----------------
 section("experience", "Experience", "A timeline of what I've done")
